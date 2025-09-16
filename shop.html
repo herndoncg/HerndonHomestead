@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Herndon Homestead Shop</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ocean: #005F86;
+      --tan: #d2b48c;
+      --charcoal: #333333;
+      --gold: #ffd28f;
+      --white: #ffffff;
+      --black: #000000;
+      --radius: 14px;
+      --shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    /* Resets */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: Inter, Arial, Helvetica, sans-serif; color: var(--charcoal); background: #faf8f5; }
+    h1, h2, h3, h4 { font-family: Sitka, Georgia, serif; margin: 0 0 .35rem; color: var(--charcoal); }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--white);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+    .topbar { display: flex; gap: 1rem; align-items: center; justify-content: space-between; padding: .75rem 0; }
+    .brand { display: flex; align-items: center; gap: .75rem; }
+    .brand-logo { width: 36px; height: 36px; background: var(--tan); border-radius: 8px; box-shadow: inset 0 0 0 2px rgba(0,0,0,.08); }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.05; }
+    .brand-text .name { font-family: Sitka, Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--ocean); letter-spacing: .3px; }
+    .brand-text .tagline { font-size: .78rem; color: #555; }
+
+    nav ul { list-style: none; display: flex; gap: .5rem; flex-wrap: wrap; padding: 0; margin: 0; }
+    nav a { display: inline-block; padding: .55rem .8rem; border-radius: 999px; font-weight: 500; color: #222; transition: transform .18s ease, background .18s ease, box-shadow .18s ease; }
+    nav a:hover { background: rgba(0,95,134,0.08); transform: translateY(-1px); }
+    nav a.active { background: var(--ocean); color: var(--white); box-shadow: 0 6px 16px rgba(0,95,134,0.25); }
+
+    /* Hero */
+    .hero {
+      position: relative; isolation: isolate; color: var(--white);
+      background: url('https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+    }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.35)); z-index: -1; }
+    .hero-inner { padding: clamp(3rem, 6vw, 6rem) 1rem; text-align: center; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.25rem); color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,.35); }
+    .hero p { font-size: 1.05rem; opacity: .95; }
+
+    /* Coming Soon Banner */
+    .banner {
+      margin-top: -10px;
+      background: rgba(0,95,134,0.06);
+      backdrop-filter: blur(2px);
+      display: flex; justify-content: center; align-items: center;
+    }
+    .banner .pill {
+      background: transparent;
+      color: var(--ocean);
+      border: none;
+      padding: .85rem 0;
+      border-radius: 0;
+      font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+      box-shadow: none;
+      position: relative;
+    }
+    .banner .pill::before,
+    .banner .pill::after {
+      content: ""; display: inline-block; width: 28px; height: 2px; background: currentColor; opacity: .35; margin: 0 .8rem; vertical-align: middle;
+    }
+
+    /* Shop Intro */
+    .intro { padding: 2rem 0 1rem; text-align: center; color: #444; }
+    .intro p { max-width: 820px; margin: .5rem auto 0; }
+
+    /* Product Grid */
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; padding-bottom: 3rem; }
+    .card { grid-column: span 12; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; transition: transform .18s ease, box-shadow .2s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,.14); }
+    .card-img { aspect-ratio: 4/3; object-fit: cover; }
+    .card-body { padding: 1rem; display: flex; flex-direction: column; gap: .35rem; }
+    .card-title { font-size: 1.05rem; font-weight: 700; }
+    .price { font-weight: 700; color: var(--ocean); }
+    .muted { color: #666; font-size: .9rem; }
+    .actions { margin-top: .5rem; display: flex; gap: .5rem; }
+    .btn { border: none; padding: .7rem 1rem; border-radius: 12px; cursor: not-allowed; font-weight: 600; background: #eaeaea; color: #777; position: relative; }
+    .btn[disabled]::after { content: none; display: none; }
+    /* Card badge for coming soon */
+    .card { position: relative; }
+    .card:has(.btn[disabled])::after {
+      content: "COMING SOON";
+      position: absolute; top: 10px; right: 10px;
+      background: var(--tan); color: #2a2a2a;
+      border-radius: 999px; padding: .25rem .6rem;
+      font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+      box-shadow: var(--shadow);
+      pointer-events: none;
+    }
+
+    @media (min-width: 540px) { .card { grid-column: span 6; } }
+    @media (min-width: 900px) { .card { grid-column: span 3; } }
+
+    /* Forms */
+    .forms { padding: 2rem 0 3rem; }
+    .forms h2 { font-size: 1.4rem; margin-bottom: .5rem; }
+    .forms p.lead { color: #555; margin-top: 0; margin-bottom: 1.25rem; }
+    .forms-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }
+    .form-card { grid-column: span 12; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem; }
+    .form-body { display: grid; gap: .9rem; }
+    .field { display: flex; flex-direction: column; gap: .35rem; }
+    .field label { font-weight: 600; font-size: .9rem; color: #222; }
+    .input, .select, .textarea { width: 100%; padding: .7rem .8rem; border: 1px solid #e2e2e2; border-radius: 12px; font: inherit; background: #fff; }
+    .textarea { min-height: 120px; resize: vertical; }
+    .row-2 { display: grid; grid-template-columns: 1fr; gap: .9rem; }
+    @media (min-width: 760px) { .row-2 { grid-template-columns: 1fr 1fr; } }
+    .help { color: #666; font-size: .85rem; }
+    .btn-primary { border: none; padding: .8rem 1rem; border-radius: 12px; background: var(--ocean); color: var(--white); font-weight: 700; cursor: pointer; transition: transform .15s ease, box-shadow .2s ease, background .15s ease; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,95,134,.25); background: #0b6d97; }
+    .btn-outline { border: 2px solid var(--ocean); background: transparent; color: var(--ocean); border-radius: 999px; padding: .45rem .8rem; font-weight: 700; cursor: pointer; }
+    .quick-amounts { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .note { font-size: .85rem; color: #555; }
+
+    /* Footer */
+    footer { background: var(--ocean); color: var(--white); padding: 2rem 0; margin-top: 2rem; }
+    .footer-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; align-items: center; }
+    .footer-brand { display: flex; flex-direction: column; gap: .25rem; }
+    .footer-brand h4 { color: #fff; }
+    .footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .footer-links a { color: #eaf8ff; opacity: .9; padding: .25rem .5rem; border-radius: 8px; }
+    .footer-links a:hover { background: rgba(255,210,143,.17); color: #fff; }
+    .subtle { opacity: .85; }
+
+    @media (min-width: 860px) {
+      .footer-grid { grid-template-columns: 2fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Global Nav -->
+  <header>
+    <div class="container topbar">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true" title="Favicon placeholder"></div>
+        <div class="brand-text">
+          <span class="name">Herndon Homestead</span>
+          <span class="tagline">Natural food, simple living, shared at the table.</span>
+        </div>
+      </div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="subbrands.html">Sub-Brands</a></li>
+          <li><a href="recipes.html">Recipes</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a class="active" href="shop.html" aria-current="page">Shop</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" role="banner">
+    <div class="container hero-inner">
+      <h1>Herndon Homestead Shop.</h1>
+      <p>Handmade goods, homestead staples, and kitchen favorites—curated with care. Opening soon.</p>
+    </div>
+  </section>
+
+  <!-- Coming Soon banner -->
+  <div class="banner" aria-live="polite">
+    <div class="pill" title="Storefront launching soon">Coming Soon</div>
+  </div>
+
+  <!-- Intro -->
+  <section class="intro container">
+    <h2 style="font-size:1.35rem">Browse our upcoming collection</h2>
+    <p>While we prepare our storefront, here are a few example items to preview the feel and layout. Buttons are disabled until checkout launches.</p>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="container">
+    <div class="grid">
+      <!-- Card 1 -->
+      <article class="card" aria-label="HH Stoneware Mug">
+        <img class="card-img" src="https://images.unsplash.com/photo-1504630083234-14187a9df0f5?q=80&w=1400&auto=format&fit=crop" alt="Stoneware mug on a wooden table" />
+        <div class="card-body">
+          <h3 class="card-title">HH Stoneware Mug</h3>
+          <span class="price">$24</span>
+          <p class="muted">12oz | Dishwasher-safe | Warm, earthy glaze</p>
+          <div class="actions">
+            <button class="btn" disabled aria-disabled="true">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+      <!-- Card 2 -->
+      <article class="card" aria-label="Herndough Sourdough Loaf">
+        <img class="card-img" src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?q=80&w=1400&auto=format&fit=crop" alt="Crusty sourdough loaf on cutting board" />
+        <div class="card-body">
+          <h3 class="card-title">Herndough Sourdough Loaf</h3>
+          <span class="price">$9</span>
+          <p class="muted">Naturally leavened | 24–48h ferment | Heirloom starter</p>
+          <div class="actions">
+            <button class="btn" disabled aria-disabled="true">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+      <!-- Card 3 -->
+      <article class="card" aria-label="Gardeners' Seed Pack">
+        <img class="card-img" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1400&auto=format&fit=crop" alt="Packets of garden seeds on a rustic table" />
+        <div class="card-body">
+          <h3 class="card-title">Gardeners' Seed Pack</h3>
+          <span class="price">$14</span>
+          <p class="muted">Seasonal mix | Heirloom varieties | Planting guide PDF</p>
+          <div class="actions">
+            <button class="btn" disabled aria-disabled="true">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+      <!-- Card 4 -->
+      <article class="card" aria-label="Homestead Apron">
+        <img class="card-img" src="https://images.unsplash.com/photo-1513863323353-5b75a0928b2f?q=80&w=1400&auto=format&fit=crop" alt="Tan canvas kitchen apron hanging on a hook" />
+        <div class="card-body">
+          <h3 class="card-title">Homestead Apron</h3>
+          <span class="price">$32</span>
+          <p class="muted">Canvas | Adjustable fit | Front pocket</p>
+          <div class="actions">
+            <button class="btn" disabled aria-disabled="true">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+      <!-- Card 5 -->
+      <article class="card" aria-label="Beeswax Wraps (3-pack)">
+        <img class="card-img" src="https://images.unsplash.com/photo-1519681393505-134e9f0a3a17?q=80&w=1400&auto=format&fit=crop" alt="Reusable beeswax wraps on a kitchen counter" />
+        <div class="card-body">
+          <h3 class="card-title">Beeswax Wraps (3‑pack)</h3>
+          <span class="price">$18</span>
+          <p class="muted">Eco‑friendly food storage | Reusable | Various sizes</p>
+          <div class="actions">
+            <button class="btn" disabled aria-disabled="true">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+      <!-- Card 6 -->
+      <article class="card" aria-label="Locally Sourced Honey">
+        <img class="card-img" src="https://images.unsplash.com/photo-1505575972945-99f3184f7992?q=80&w=1400&auto=format&fit=crop" alt="Jar of golden honey with dipper" />
+        <div class="card-body">
+          <h3 class="card-title">Locally Sourced Honey</h3>
+          <span class="price">$16</span>
+          <p class="muted">Raw | Unfiltered | 12oz glass jar</p>
+          <div class="actions">
+            <button class="btn" disabled aria-disabled="true">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+      <!-- Card 7 -->
+      <article class="card" aria-label="Enamel Camping Mug">
+        <img class="card-img" src="https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=1400&auto=format&fit=crop" alt="White enamel camping mug on a log" />
+        <div class="card-body">
+          <h3 class="card-title">Enamel Camping Mug</h3>
+          <span class="price">$19</span>
+          <p class="muted">Lightweight | Camp‑ready | HH crest</p>
+          <div class="actions">
+            <button class="btn" disabled aria-disabled="true">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+      <!-- Card 8 -->
+      <article class="card" aria-label="Homestead Recipe Journal">
+        <img class="card-img" src="https://images.unsplash.com/photo-1510070009289-b5bc34383727?q=80&w=1400&auto=format&fit=crop" alt="Open recipe journal with pen on a table" />
+        <div class="card-body">
+          <h3 class="card-title">Homestead Recipe Journal</h3>
+          <span class="price">$22</span>
+          <p class="muted">80 pages | Lay‑flat | Tan linen cover</p>
+          <div class="actions">
+            <button class="btn" disabled aria-disabled="true">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Support & Requests Forms -->
+  <section id="support-requests" class="container forms">
+    <div class="forms-grid">
+      <!-- Product Request Form -->
+      <form name="product-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="form-card" id="request-product">
+        <input type="hidden" name="form-name" value="product-request" />
+        <div style="display:none"><label>Don’t fill this out if you're human: <input name="bot-field" /></label></div>
+        <h2>Request a New Product</h2>
+        <p class="lead">Tell us what you'd love to see in the shop—breads, pantry goods, garden kits, or homestead gear.</p>
+        <div class="form-body">
+          <div class="row-2">
+            <div class="field">
+              <label for="req-name">Name</label>
+              <input id="req-name" name="name" class="input" type="text" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="req-email">Email</label>
+              <input id="req-email" name="email" class="input" type="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="req-title">Product idea</label>
+              <input id="req-title" name="product" class="input" type="text" placeholder="e.g., Einkorn Sandwich Loaf" required>
+            </div>
+            <div class="field">
+              <label for="req-category">Category</label>
+              <select id="req-category" name="category" class="select" required>
+                <option value="" disabled selected>Select a category</option>
+                <option>Herndough (breads & pastries)</option>
+                <option>Homestead kitchenware</option>
+                <option>Garden & Harvest</option>
+                <option>Apparel & gifts</option>
+                <option>Pantry goods</option>
+              </select>
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="req-price">Approx. price range</label>
+              <select id="req-price" name="price_range" class="select">
+                <option value="" selected>Open to suggestions</option>
+                <option>Under $15</option>
+                <option>$15–$25</option>
+                <option>$25–$50</option>
+                <option>$50+</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="req-when">When would you want this?</label>
+              <select id="req-when" name="timeline" class="select">
+                <option>Soon</option>
+                <option>Next season</option>
+                <option>Just an idea for later</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="req-desc">Describe it a bit more</label>
+            <textarea id="req-desc" name="description" class="textarea" placeholder="Features, sizes, flavors, why you want it…"></textarea>
+            <div class="help">We may reach out if we build this—thank you for helping shape the shop!</div>
+          </div>
+          <div class="field">
+            <label style="display:flex; gap:.5rem; align-items:center"><input type="checkbox" name="ok_to_email"> I'm okay with email follow‑up about this idea</label>
+          </div>
+          <div>
+            <button class="btn-primary" type="submit">Send Request</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Donations Form -->
+      <form name="donation-pledge" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="form-card" id="donate">
+        <input type="hidden" name="form-name" value="donation-pledge" />
+        <div style="display:none"><label>Don’t fill this out if you're human: <input name="bot-field" /></label></div>
+        <h2>Donate to the Homestead</h2>
+        <p class="lead">Your generosity helps us teach, grow, and share. This form collects pledges/notes; online payment is coming soon.</p>
+        <div class="form-body">
+          <div class="row-2">
+            <div class="field">
+              <label for="donor-name">Name</label>
+              <input id="donor-name" name="name" class="input" type="text" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="donor-email">Email</label>
+              <input id="donor-email" name="email" class="input" type="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="field">
+            <label>Choose an amount</label>
+            <div class="quick-amounts">
+              <button class="btn-outline" type="button" data-amount-btn="10">$10</button>
+              <button class="btn-outline" type="button" data-amount-btn="25">$25</button>
+              <button class="btn-outline" type="button" data-amount-btn="50">$50</button>
+              <button class="btn-outline" type="button" data-amount-btn="100">$100</button>
+              <button class="btn-outline" type="button" data-amount-btn="other">Other</button>
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="donation-amount">Amount (USD)</label>
+              <input id="donation-amount" class="input" name="amount" type="number" min="1" step="1" placeholder="Enter an amount" required>
+            </div>
+            <div class="field">
+              <label for="donation-type">Type</label>
+              <select id="donation-type" name="type" class="select">
+                <option>One‑time</option>
+                <option disabled>Monthly (coming soon)</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="donation-note">Note (optional)</label>
+            <textarea id="donation-note" name="note" class="textarea" placeholder="If you'd like this used for a specific project, let us know."></textarea>
+            <div class="note">Online checkout is not live yet. We'll email you a receipt or a link to complete your gift.</div>
+          </div>
+          <div>
+            <button class="btn-primary" type="submit">Send Pledge</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h4>Herndon Homestead</h4>
+        <div class="subtle">“Natural food, simple living, shared at the table.”</div>
+        <div class="subtle">Proverbs 16:3</div>
+        <div class="subtle">&copy; <span id="year"></span> Herndon Homestead. All rights reserved.</div>
+      </div>
+      <div class="footer-links" aria-label="Footer Links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="subbrands.html">Sub‑Brands</a>
+        <a href="support.html">Support</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // (Future) If you connect a cart system, swap disabled buttons to active and wire up handlers.
+    // Example: integrate Stripe, Snipcart, Shopify Buy SDK, or a Netlify Function for checkout.
+      // Donation quick-amount buttons fill the amount field
+    (function(){
+      const amountInput = document.getElementById('donation-amount');
+      document.querySelectorAll('[data-amount-btn]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const v = btn.getAttribute('data-amount-btn');
+          if (v === 'other') { amountInput.value = ''; amountInput.focus(); }
+          else { amountInput.value = v; amountInput.dispatchEvent(new Event('change')); }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

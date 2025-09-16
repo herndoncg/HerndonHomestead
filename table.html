@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Herndon Table – Hospitality & Meals | Herndon Homestead</title>
+  <meta name="description" content="The Herndon Table is where faith, food, and family gather. We cook, share, and open our home to all." />
+
+  <!-- Fonts: Inter (preferred body), Sitka/Georgia (headings fallback) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" />
+  <link rel="icon" href="assets/favicon-16.png" sizes="16x16" />
+
+  <style>
+    :root{
+      --ocean: #005F86; /* Ocean Blue */
+      --tan: #d2b48c;   /* Tan */
+      --charcoal: #333; /* Light Charcoal */
+      --black: #000;    /* Black */
+      --white: #fff;    /* White */
+      --gold: #ffd28f;  /* Accent Gold for hover/buttons */
+      --radius: 14px;
+      --shadow: 0 10px 24px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.06);
+      --shadow-sm: 0 6px 16px rgba(0,0,0,.06), 0 1px 4px rgba(0,0,0,.05);
+      --maxw: 1200px;
+    }
+
+    /* Global Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin:0; padding:0; }
+
+    body{
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+      color: var(--charcoal);
+      background: #fafaf9;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: Sitka, Georgia, 'Times New Roman', serif;
+      color: var(--charcoal);
+      line-height: 1.2;
+      margin: 0 0 .5rem 0;
+    }
+
+    a { color: var(--ocean); text-decoration: none; }
+    a:hover { color: #014a67; }
+
+    .container { max-width: var(--maxw); margin-inline: auto; padding: 0 20px; }
+
+    /* Header / Nav */
+    header.site-header{
+      position: sticky; top: 0; z-index: 50;
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav { display: flex; align-items: center; gap: 24px; padding: 14px 0; }
+    .brand { display:flex; align-items:center; gap:10px; }
+    .brand .brand-text { display:flex; flex-direction:column; }
+    .brand .name { font-weight: 800; letter-spacing: .3px; color: var(--ocean); }
+    .brand .tagline { font-size: .85rem; color: var(--charcoal); opacity: .8; }
+
+    nav.primary { margin-left: auto; }
+    .menu { display: flex; gap: 14px; flex-wrap: wrap; }
+    .menu a{
+      padding: 8px 12px; border-radius: 999px; font-weight: 600; font-size: .95rem;
+      transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease;
+    }
+    .menu a:hover{ background: var(--gold); color: #1b1917; transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .menu a.active{ background: var(--tan); color: #3a2f22; box-shadow: var(--shadow-sm); }
+
+    /* Sub-brand chip */
+    .chip{
+      display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px;
+      background: rgba(0,95,134,.12); color: var(--ocean); font-weight:600; font-size:.9rem;
+    }
+    .chip small{ opacity:.85; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+
+    .favicon{ width:20px; height:20px; border-radius:4px; box-shadow: var(--shadow-sm); }
+
+    /* Hero */
+    .hero{
+      position: relative; isolation: isolate; min-height: 52svh;
+      display: grid; place-items: center; text-align: center; overflow: clip;
+      background: #0a2e3f;
+    }
+    .hero::before{
+      content:""; position:absolute; inset:0; z-index:-2;
+      background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+      filter: brightness(.6) saturate(1.05);
+    }
+    .hero::after{
+      content:""; position:absolute; inset:0; z-index:-1; background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.45));
+    }
+    .hero .hero-inner{ max-width: 920px; padding: 48px 20px; }
+    .hero h1{ font-size: clamp(2rem, 4.5vw, 3.25rem); color: var(--white); }
+    .hero p{
+      margin: 14px auto 0; color: #f3f3f3; font-size: clamp(1rem, 1.6vw, 1.125rem);
+      background: rgba(0,0,0,.45); padding: 10px 14px; border-radius: var(--radius);
+      display:inline-block;
+    }
+
+    /* Sections */
+    section { padding: 64px 0; }
+    .intro h2{ font-size: clamp(1.6rem, 3vw, 2rem); }
+    .intro .intro-body{ max-width: 900px; margin: 0 auto; }
+    .intro .intro-body p{ font-size: 1.1rem; margin: 0 0 .9rem 0; }
+
+    .grid{ display:grid; gap: 24px; }
+    @media (min-width: 720px){ .grid.cols-2{ grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px){ .grid.cols-3{ grid-template-columns: repeat(3, 1fr); } }
+
+    /* Cards */
+    .card{
+      background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+      overflow: hidden; display:flex; flex-direction: column; height: 100%;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover{ transform: translateY(-4px); box-shadow: 0 14px 32px rgba(0,0,0,.12), 0 4px 10px rgba(0,0,0,.08); }
+    .card-media{ position:relative; width:100%; aspect-ratio: 16/9; overflow:hidden; }
+    .card-media img{ width:100%; height:100%; object-fit: cover; display:block; }
+    .card-body{ padding: 18px; display:flex; flex-direction: column; gap: 8px; }
+    .card-body h3{ margin-bottom: 2px; font-size: 1.25rem; }
+    .card-body p{ margin: 0; color:#4a4a4a; }
+    /* Technique labels & groups */
+    .level-badge{ align-self:flex-start; background: rgba(0,95,134,.08); color: var(--ocean); border: 1px solid rgba(0,95,134,.25); padding:4px 8px; border-radius: 999px; font-weight:700; font-size:.75rem; letter-spacing:.02em; }
+    .level-group{ margin-bottom: 44px; }
+    .level-bar{ display:flex; align-items:center; justify-content: space-between; gap:12px; padding:14px 16px; border-radius: 12px; background: var(--ocean); color: var(--white); box-shadow: var(--shadow-sm); }
+    .level-bar .title{ font-family: Sitka, Georgia, 'Times New Roman', serif; font-weight: 800; letter-spacing:.02em; }
+    .level-bar .hint{ opacity:.9; font-size:.95rem; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      background: var(--ocean); color: var(--white); padding: 10px 16px; border-radius: 999px;
+      font-weight: 700; letter-spacing:.02em; border: 0; cursor:pointer; margin-top: 6px;
+      transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease;
+    }
+    .btn:hover{ background: #014a67; transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+    /* Placeholders */
+    .placeholder{ background: #fff; border: 2px dashed rgba(0,0,0,.09); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); }
+    .placeholder h3{ margin-bottom: 8px; }
+    /* Benefits quad (2x2 with center plus) */
+    .benefits-quad{ position: relative; }
+    @media (min-width:720px){
+      .benefits-quad{
+        background:
+          linear-gradient(var(--tan), var(--tan)) 50% 0/2px 100% no-repeat,
+          linear-gradient(var(--tan), var(--tan)) 0 50%/100% 2px no-repeat;
+        padding: 12px 0;
+      }
+    }
+    .quad-grid{ display:grid; gap:28px; }
+    @media(min-width:720px){ .quad-grid{ grid-template-columns: repeat(2,1fr); } }
+    .benefit{ padding: 0 14px; border: none; }
+    .benefit h3{ margin:0 0 6px; }
+    .benefit p{ margin:0; color:#4a4a4a; }
+
+    /* Benefits layout */
+    .benefits-wrap{ display:grid; gap:28px; align-items:center; grid-template-columns: 1fr; }
+    .section-title.center{ text-align:center; }
+
+    /* Footer */
+    footer{
+      background: var(--ocean); color: var(--white); margin-top: 40px; }
+    .footer-inner{ display:grid; gap:18px; grid-template-columns: 1fr; padding: 28px 0; }
+    .footer-brand{ font-family: Sitka, Georgia, 'Times New Roman', serif; }
+    .legal a{ color: var(--gold); }
+    @media (min-width: 760px){ .footer-inner { grid-template-columns: 2fr 1fr; } }
+
+    /* Utility */
+    .mb-2{ margin-bottom: .5rem; }
+    .mb-3{ margin-bottom: .75rem; }
+    .mb-4{ margin-bottom: 1rem; }
+    .mb-6{ margin-bottom: 1.5rem; }
+    .center { text-align:center; }
+  </style>
+</head>
+<body>
+  <!-- Sticky Global Header / Shared Navigation -->
+  <header class="site-header">
+    <div class="container nav">
+      <div class="brand" aria-label="Herndon Homestead">
+        <img class="favicon" src="assets/favicon-32.png" alt="" aria-hidden="true" />
+        <div class="brand-text">
+          <span class="name">Herndon Homestead</span>
+          <span class="tagline">“Natural food, simple living, shared at the table.”</span>
+        </div>
+      </div>
+      <nav class="primary" aria-label="Primary">
+        <div class="menu">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a class="active" href="subbrands.html" aria-current="page">Sub-Brands</a>
+          <a href="recipes.html">Recipes</a>
+          <a href="blog.html">Blog</a>
+          <a href="shop.html">Shop</a>
+          <a href="contact.html">Contact</a>
+          <a href="support.html">Support</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" role="banner" aria-label="The Herndon Table – Hospitality & Meals">
+    <div class="hero-inner">      <h1>The Herndon Table – Hospitality &amp; Meals.</h1>
+      <p>“The Herndon Table is where faith, food, and family gather. We cook, share, and open our home to all.”</p>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="intro">
+    <div class="container center">
+      <h2 class="mb-3">Welcome to our table</h2>
+      <div class="intro-body">
+        <p>Here, supper is more than a plate of food—it’s a daily rhythm of prayer, conversation, and care. We slow down, look one another in the eye, and remember that people come before pace.</p>
+        <p>We cook simple, seasonal meals: cast‑iron sears, garden sides, fresh bread, and pies that bring everyone back for seconds. We pass plates, share stories, and teach our kids the quiet skills of gratitude, kindness, and serving one another.</p>
+        <p>Whether it’s a weeknight skillet or a holiday feast, there’s always room for one more. If you’re near, pull up a chair; if you’re far, cook along with us—we hope these recipes and practices make hosting feel natural and joyful.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Family Values -->
+  <section class="family-values">
+    <div class="container">
+      <h2 class="mb-4 section-title center">The Benefits of Coming Together</h2>
+      <div class="benefits-wrap">
+        <div class="benefits-quad">
+          <div class="quad-grid">
+            <div class="benefit">
+              <h3>Family Before Frantic</h3>
+              <p class="muted">We slow down to look one another in the eye, say grace, and share stories. The table anchors our home and reminds us that people matter more than pace. We sit and speak of God’s words “when you sit in your house” (<strong>Deut. 6:6–7</strong>) and remember that it’s “better a simple dinner with love than a feast with strife” (<strong>Prov. 15:17</strong>).</p>
+            </div>
+            <div class="benefit">
+              <h3>Breaking Bread Builds Hearts</h3>
+              <p class="muted">Cooking and eating together forms gratitude, generosity, and belonging. The early church “broke bread in their homes and ate together” with glad hearts (<strong>Acts 2:46</strong>), and Jesus was “known… in the breaking of the bread” (<strong>Luke 24:30–31</strong>).</p>
+            </div>
+            <div class="benefit">
+              <h3>Hospitality Is Ministry</h3>
+              <p class="muted">Opening our doors is how we live our faith—welcoming friends and strangers, sharing what we have, and making room at the table. We “contribute to the needs of the saints and practice hospitality” (<strong>Rom. 12:13</strong>) and “do not neglect to show hospitality to strangers” (<strong>Heb. 13:2</strong>).</p>
+            </div>
+            <div class="benefit">
+              <h3>Conversation That Disciples</h3>
+              <p class="muted">We talk about our day, our hopes, and God’s Word. Little, regular conversations shape character and pass on our values—“teach them diligently… and talk of them when you sit in your house” (<strong>Deut. 6:6–7</strong>)—and we aim that “whether you eat or drink, do all to the glory of God” (<strong>1 Cor. 10:31</strong>).</p>
+            </div>
+          </div>
+        </div>
+        <div class="scripture">
+          <h3>Scriptures We Stand On</h3>
+          <p class="muted">This table is anchored in a few simple verses: <strong>Acts 2:46</strong> (sharing meals with glad hearts), <strong>Deuteronomy 6:6–7</strong> (teaching God’s Word at home), <strong>Romans 12:13</strong> (practicing hospitality), and <strong>1 Corinthians 10:31</strong> (doing all to God’s glory).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Recipes -->
+  <section class="featured">
+    <div class="container">
+      <h2 class="mb-4">Featured Recipes</h2>
+      <div class="grid cols-2">
+        <!-- Cast Iron Skillet Steak -->
+        <article class="card">
+          <div class="card-media">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop" alt="Cast iron skillet steak with a crisp sear" />
+          </div>
+          <div class="card-body">
+            <span class="pill" aria-hidden="true">Cast Iron</span>
+            <h3>Cast Iron Skillet Steak</h3>
+            <p class="muted">A blistered, buttery sear with simple seasoning—finish with herbs and a spoon of pan drippings.</p>
+            <a class="btn" href="recipes/cast-iron-skillet-steak.html">View Recipe</a>
+          </div>
+        </article>
+
+        <!-- Holiday Apple Pie -->
+        <article class="card">
+          <div class="card-media">
+            <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop" alt="Golden holiday apple pie with lattice crust" />
+          </div>
+          <div class="card-body">
+            <span class="pill" aria-hidden="true">Bakeshop</span>
+            <h3>Holiday Apple Pie</h3>
+            <p class="muted">Tender apples, warm spice, and a flaky lattice—perfect for gatherings and grateful hearts.</p>
+            <a class="btn" href="recipes/holiday-apple-pie.html">View Recipe</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cooking Techniques Placeholder -->
+  <section class="techniques">
+    <div class="container">
+      <h2 class="mb-4">Cooking Techniques</h2>
+
+      <!-- BEGINNER GROUP -->
+      <div class="level-group">
+        <div class="level-bar" aria-label="Beginner techniques">
+          <span class="title">Beginner</span>
+          <span class="hint">Start here to build confidence</span>
+        </div>
+        <div class="grid cols-3">
+          <article class="card"><div class="card-body"><span class="level-badge">Beginner</span><h3>Heat Zones &amp; Sear</h3><p class="muted">Preheat the pan 3–5 minutes. Test with a drop of water (it should dance). Add oil, then meat. Don’t move it for 90–120 seconds.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Beginner</span><h3>Seasoning Cast Iron</h3><p class="muted">Coat lightly with neutral oil, bake at 450°F for 1 hour, cool in oven. Repeat 2–3× for a durable, nonstick patina.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Beginner</span><h3>Knife Skills &amp; Mise</h3><p class="muted">Keep a sharp 8&quot; chef’s knife. Group prep (mise en place) before cooking to make dinner smooth and stress‑free.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Beginner</span><h3>Roasted Vegetables</h3><p class="muted">Sheet pan at 425°F, don’t crowd. Toss veg with oil/salt. Roast until edges char and centers turn tender‑sweet.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Beginner</span><h3>Thermometer 101</h3><p class="muted">Use an instant‑read. Pull chicken at 160–162°F (rest to 165°F); steak at target minus 5°F to account for carryover.</p></div></article>
+        </div>
+      </div>
+
+      <!-- INTERMEDIATE GROUP -->
+      <div class="level-group">
+        <div class="level-bar" aria-label="Intermediate techniques">
+          <span class="title">Intermediate</span>
+          <span class="hint">Flavor building &amp; better textures</span>
+        </div>
+        <div class="grid cols-3">
+          <article class="card"><div class="card-body"><span class="level-badge">Intermediate</span><h3>Pan Sauces 101</h3><p class="muted">After searing, deglaze with stock or wine, reduce, then whisk in 1–2 tsp cold butter off heat for gloss and body.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Intermediate</span><h3>Braising Basics</h3><p class="muted">Brown meat, add aromatics, deglaze, then cook covered at 300°F with liquid 1/3–1/2 up the sides until fork‑tender.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Intermediate</span><h3>Southern Gravy &amp; Biscuits</h3><p class="muted">Use rendered fat + flour for a light roux, whisk in milk, simmer till nappé. Split hot biscuits; serve immediately.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Intermediate</span><h3>Oven‑“Fried” Crunch</h3><p class="muted">Wire rack on a sheet pan, high heat (425–450°F), and panko + grated cheese for crisp without deep frying.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Intermediate</span><h3>Fluffy Rice &amp; Grains</h3><p class="muted">Rinse rice, 1:1½ ratio, tight lid, 18 minutes simmer, 10 minutes rest; finish with fork fluff and a knob of butter.</p></div></article>
+        </div>
+      </div>
+
+      <!-- EXPERIENCED GROUP -->
+      <div class="level-group">
+        <div class="level-bar" aria-label="Experienced techniques">
+          <span class="title">Experienced</span>
+          <span class="hint">Hosting, timing, and show‑stoppers</span>
+        </div>
+        <div class="grid cols-3">
+          <article class="card"><div class="card-body"><span class="level-badge">Experienced</span><h3>Hosting Flow &amp; Timing</h3><p class="muted">Build a prep timeline: day‑before desserts, morning sides, afternoon mains. Set the table early; keep a 170°F warm oven.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Experienced</span><h3>Reverse‑Sear Steak</h3><p class="muted">Bake at 250°F to 10°F below target, rest 10 minutes, then hard sear in cast iron with butter for edge‑to‑edge doneness.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Experienced</span><h3>Whole Roast Chicken</h3><p class="muted">Dry‑brine 12–24 hrs, roast at 425°F on a rack; baste once. Rest 10–15 min; carve and finish with pan juices.</p></div></article>
+          <article class="card"><div class="card-body"><span class="level-badge">Experienced</span><h3>Plating &amp; Hold Temps</h3><p class="muted">Warm plates, rest meats, and use 140–170°F oven or warming drawer to hold sides so everything hits the table hot.</p></div></article>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Community Placeholder -->
+  <section class="community">
+    <div class="container">
+      <h2 class="mb-4">Community</h2>
+      <div class="placeholder center">
+        <h3>Join us at the table</h3>
+        <p class="muted">Cooking classes and gatherings coming soon. We can’t wait to host you.</p>
+        <a class="btn" href="contact.html">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shared Footer -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <h3 class="mb-2" style="color: var(--gold);">Herndon Homestead</h3>
+        <p class="mb-3">“Natural food, simple living, shared at the table.”</p>
+        <p class="mb-2"><em>Proverbs 16:3</em></p>
+      </div>
+      <div class="legal">
+        <p class="mb-2"><strong>Explore</strong></p>
+        <p class="mb-2"><a href="index.html">Home</a> · <a href="about.html">About</a> · <a href="subbrands.html">Sub‑Brands</a> · <a href="recipes.html">Recipes</a> · <a href="blog.html">Blog</a> · <a href="shop.html">Shop</a> · <a href="contact.html">Contact</a> · <a href="support.html">Support</a></p>
+        <p class="mb-2"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+        <p>© <span id="year"></span> Herndon Homestead. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set dynamic year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Herndon Harvest – Garden & Pantry | Herndon Homestead</title>
+  <style>
+    :root{
+      --ocean:#005F86; --tan:#d2b48c; --char:#333; --gold:#ffd28f; --white:#fff; --black:#000;
+      --radius:14px; --shadow:0 8px 24px rgba(0,0,0,.08);
+    }
+    html,body{margin:0;padding:0;background:#fafafa;color:var(--char);font-family:Inter, Arial, Helvetica, sans-serif;line-height:1.7;font-size:18px}
+    h1,h2,h3{font-family:Sitka, Georgia, 'Times New Roman', serif;color:var(--char)}
+    a{color:var(--ocean);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Header */
+    .header{position:sticky;top:0;z-index:1000;backdrop-filter:saturate(1.2) blur(8px);background:rgba(255,255,255,.85);box-shadow:0 1px 0 rgba(0,0,0,.06)}
+    .nav{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem}
+    .brand{display:flex;align-items:center;gap:.75rem;font-weight:700}
+    .brand .logo{width:36px;height:36px;background:var(--ocean);border-radius:8px;box-shadow:var(--shadow)}
+    .brand .text{display:flex;flex-direction:column}
+    .brand .text small{font-size:.75rem;letter-spacing:.04em;color:#555}
+    .nav ul{display:flex;gap:.75rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+    .nav a.navlink{padding:.5rem .8rem;border-radius:999px;transition:transform .15s ease, box-shadow .15s ease, background .15s ease}
+    .nav a.navlink:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(0,0,0,.08);background:var(--gold);color:#000}
+    .nav .current{background:var(--tan);color:#000}
+
+    /* Hero */
+    .hero{position:relative;min-height:44vh;display:grid;place-items:center;text-align:center;color:#fff;background-color:#123;background-image:url('https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=2000&q=80'), url('assets/harvest/hero-vegetables.jpg');background-position:center;background-size:cover;background-repeat:no-repeat}
+    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.45))}
+    .hero .inner{position:relative;z-index:1;padding:3rem 1rem;max-width:1000px;margin:0 auto}
+    .hero h1{color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.35);}
+    .hero p{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.35);} 
+
+    /* Type scale */
+    :root{ --h1: clamp(2.4rem, 3.4vw + 1rem, 3.8rem); --h2: clamp(1.8rem, 1.6vw + 1rem, 2.3rem); --h3: clamp(1.25rem, 1vw + .95rem, 1.6rem); }
+    h1{ font-size: var(--h1); }
+    h2{ font-size: var(--h2); }
+    h3{ font-size: var(--h3); }
+    p, li{ font-size: 1.05rem; }
+    
+    .header-media img{ width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:12px; box-shadow: var(--shadow); }
+    .header-img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:12px; box-shadow: var(--shadow); }
+
+    /* Main */
+    main{max-width:1200px;margin:0 auto;padding:2rem 1rem 4rem}
+    .section{margin-top:2rem}
+    .section h2{margin:0 0 .75rem;padding:0;background:none;color:var(--char);border-bottom:3px solid var(--tan);border-radius:0;box-shadow:none}
+    .grid{display:grid;gap:1.25rem}
+    @media (min-width:700px){.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}}
+
+    /* Columns & Media (minimal, no boxes) */
+    .columns{display:grid;gap:1.25rem}
+    @media (min-width:800px){.columns{grid-template-columns:repeat(2,1fr)}}
+    @media (min-width:1100px){.columns-3{grid-template-columns:repeat(3,1fr)}}
+    .media{display:block}
+    .media img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;box-shadow:var(--shadow)}
+    .media .content{padding:.75rem 0}
+    .media h3{margin:.5rem 0 .25rem}
+
+    /* How-to guides */
+    .guide{margin:1.25rem 0}
+    .guide + .guide{border-top:1px solid rgba(0,0,0,.1);padding-top:1.25rem}
+    .guide .steps{display:grid;gap:1rem;list-style:none;padding-left:0;margin:0}
+    @media (min-width:800px){.guide .steps{grid-template-columns:repeat(3,1fr)}}
+    .step img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;box-shadow:var(--shadow)}
+    .step h4{margin:.5rem 0 .25rem}
+    .note{font-size:.95rem;color:#555}
+    .small{font-size:.95rem;color:#555}
+    .meta{display:flex;flex-wrap:wrap;gap:.5rem 1rem;font-size:.95rem;color:#555;margin:.25rem 0 .75rem}
+    .meta span{white-space:nowrap}
+
+    /* Seasonal lists (no boxes) */
+    .produce{padding:0}
+    .produce .months{display:grid;gap:1rem}
+    @media (min-width:800px){.produce .months{grid-template-columns:repeat(4,1fr)}}
+    .month{border:0;border-radius:0;padding:0;background:transparent}
+    .month.current h4{color:var(--ocean)}
+
+    /* Seasonal bars */
+    .season-bar{position:relative;display:block;width:100%;min-height:160px;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:#123 center/cover no-repeat;margin:.75rem 0 1rem}
+    .season-bar .label{position:absolute;left:1rem;bottom:1rem;background:rgba(0,0,0,.45);color:#fff;padding:.4rem .8rem;border-radius:10px;font-weight:700;letter-spacing:.02em}
+
+    /* Produce grid */
+    .produce-grid{display:grid;gap:1rem;margin:.5rem 0 1.25rem;padding:0;list-style:none}
+    @media (min-width:700px){.produce-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (min-width:1000px){.produce-grid{grid-template-columns:repeat(4,1fr)}}
+    .produce-item h5{margin:.2rem 0 .2rem;font-family:Sitka, Georgia, serif}
+    .produce-item .meta{font-size:.95rem;color:#555}
+    .produce-item .spice{font-size:.95rem;color:#333}
+
+    /* Buttons */
+    .button{display:inline-block;margin-top:.6rem;padding:.6rem 1rem;border-radius:999px;background:var(--ocean);color:#fff;font-weight:600;box-shadow:var(--shadow);transition:transform .15s ease, background .15s ease}
+    .button:hover{background:#014b67;transform:translateY(-2px)}
+    .button.alt{background:var(--tan);color:#000}
+    .button.alt:hover{background:#c6a97d}
+    .badge{display:inline-block;background:var(--gold);color:#000;border-radius:999px;padding:.3rem .65rem;font-size:.8rem;font-weight:700}
+
+    /* Footer */
+    footer{background:#0a2f40;color:#fff;padding:2rem 1rem;margin-top:3rem}
+    footer .wrap{max-width:1200px;margin:0 auto;display:grid;gap:1rem}
+    footer .brandline{display:flex;align-items:center;gap:.75rem;font-weight:700}
+    footer a{color:var(--gold)}
+    footer .legal{font-size:.9rem;color:#dfeaf0}
+    small.verse{display:block;opacity:.9}
+
+    /* Utility */
+    .visually-hidden{position:absolute;left:-9999px}
+  </style>
+</head>
+<body>
+  <header class="header" role="banner">
+    <nav class="nav" aria-label="Global">
+      <a href="index.html" class="brand" aria-label="Herndon Homestead home">
+        <span class="logo" aria-hidden="true"></span>
+        <span class="text">
+          <span>Herndon Homestead</span>
+          <small>Natural food, simple living, shared at the table.</small>
+        </span>
+      </a>
+      <ul>
+        <li><a class="navlink" href="index.html">Home</a></li>
+        <li><a class="navlink" href="about.html">About</a></li>
+        <li><a class="navlink current" href="subbrands.html">Sub-Brands</a></li>
+        <li><a class="navlink" href="recipes.html">Recipes</a></li>
+        <li><a class="navlink" href="blog.html">Blog</a></li>
+        <li><a class="navlink" href="shop.html">Shop</a></li>
+        <li><a class="navlink" href="contact.html">Contact</a></li>
+        <li><a class="navlink" href="support.html">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" role="img" aria-label="Background photo of green leafy vegetables (stock).">
+    <div class="inner">
+      <h1>Herndon Harvest – Garden &amp; Pantry</h1>
+      <p>Herndon Harvest is about planting, growing, and preserving. From canned peaches to seasonal produce, we believe in making the most of every harvest.</p>
+    </div>
+  </section>
+
+  <main id="main-content">
+    <section class="section" aria-labelledby="ethos">
+      <h2 id="ethos">Harvest Heart</h2>
+      <div class="grid grid-3 header-media" style="margin-top:.75rem">
+        <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80" alt="Hands planting seeds in rich soil">
+        <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?auto=format&fit=crop&w=1200&q=80" alt="Tomato plants growing on trellis in the garden">
+        <img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=1200&q=80" alt="Jars of preserved vegetables lined on a shelf">
+      </div>
+      <div class="columns">
+        <div>
+          <h3>Plant • Grow • Preserve</h3>
+          <p>We plan with the seasons, build soil with compost, and sow with intention. We tend the garden daily—watering, pruning, and stewarding what the Lord brings to life. Then we preserve: canning, fermenting, freezing, and dehydrating so nothing good is wasted. We aim to use every peach, pepper, and potato well.</p>
+        </div>
+        <div>
+          <h3>Heavenly Harvest</h3>
+          <p>Creation is a gift, and the harvest reminds us of God’s steady provision. We work the soil, but the increase belongs to Him. In all we do we commit our work to the Lord (Proverbs 16:3), trusting Him with the outcome. We grow and gather with gratitude, preserve with wisdom, and share at the table so the fruit of the land becomes a testimony of faith, hospitality, and simple living.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="recipes">
+      <h2 id="recipes">Recipes &amp; How‑Tos</h2>
+
+      <!-- PICKLES -->
+      <article class="guide" id="harvest-pickles">
+        <h3>Refrigerator Dill Pickles</h3>
+        <div class="columns">
+          <div>
+            <h4>Overview</h4>
+            <p class="meta"><span><strong>Yield:</strong> 2 quarts</span><span><strong>Active:</strong> 20 min</span><span><strong>Ready:</strong> 24–48 hrs (refrigerator)</span></p>
+            <h4>Ingredients</h4>
+            <ul>
+              <li>2 lb small cucumbers (Kirby/pickling), scrubbed</li>
+              <li>2 cups water &amp; 2 cups distilled white vinegar</li>
+              <li>2 Tbsp kosher or pickling salt</li>
+              <li>8 sprigs fresh dill</li>
+              <li>4 cloves garlic, halved</li>
+              <li>2 tsp mustard seeds, 2 tsp black peppercorns</li>
+              <li>Optional: 1 jalapeño, sliced; pinch red pepper flakes</li>
+            </ul>
+            <h4>Tools</h4>
+            <ul>
+              <li>2 clean quart jars with lids</li>
+              <li>Small saucepan &amp; ladle, funnel (optional)</li>
+            </ul>
+          </div>
+        </div>
+        <ol class="steps">
+          <li class="step"><h4>1) Make the brine</h4>
+            <p>Bring water, vinegar, and salt to a simmer, stirring to dissolve. Turn off heat. (Spices go in the jars, not the pot.)</p>
+          </li>
+          <li class="step"><h4>2) Pack the jars</h4>
+            <p>Trim blossom ends; slice spears or coins. Divide dill, garlic, mustard seeds, and peppercorns between jars. Tightly pack cucumbers.</p>
+          </li>
+          <li class="step"><h4>3) Add brine</h4>
+            <p>Ladle hot brine over cucumbers to cover. Tap to release bubbles. Add jalapeño or red pepper flakes if using. Cap and cool to room temp.</p>
+          </li>
+          <li class="step"><h4>4) Chill &amp; enjoy</h4>
+            <p>Refrigerate 24–48 hours before eating. Keeps 1–2 months refrigerated. Great on sandwiches, burgers, or chopped into relish.</p>
+          </li>
+        </ol>
+      </article>
+
+      <!-- CANNING BASICS (HOW-TO) -->
+      <article id="canning" class="guide">
+        <h3>Canning Basics: Peaches (Water‑Bath)</h3>
+        <div class="columns">
+          <div>
+            <h4>Tools</h4>
+            <ul>
+              <li>Large water‑bath canner (or deep stockpot) with rack</li>
+              <li>Canning jars (pints or quarts), new lids &amp; bands</li>
+              <li>Jar lifter, canning funnel, bubble remover (or chopstick)</li>
+              <li>Large bowl with ice water, slotted spoon, clean towels</li>
+            </ul>
+            <h4>Ingredients</h4>
+            <ul>
+              <li>Fresh ripe peaches (about 2–2.5 lbs per quart)</li>
+              <li>Light syrup (optional): 1 cup sugar + 4 cups water (approx.)</li>
+              <li>Lemon juice for anti‑browning (optional)</li>
+            </ul>
+          </div>
+          <div>
+            <img class="header-img" src="assets/guides/canning-basics.jpg" alt="Canning jars, lids, and a water‑bath canner prepared on a stove" />
+            <p class="note">For food safety, always follow tested guidance and adjust processing time for altitude per USDA recommendations.</p>
+          </div>
+        </div>
+        <ol class="steps">
+          <li class="step"><h4>Prep Jars &amp; Syrup</h4>
+            <p>Wash jars, lids, and bands. Keep jars hot in simmering water. Simmer syrup in a separate pot.</p>
+          </li>
+          <li class="step"><h4>Peel Peaches</h4>
+            <p>Score an “X,” blanch 30–60 seconds, then ice‑bath. Slip off skins, pit, and slice. Toss with a little lemon juice if desired.</p>
+          </li>
+          <li class="step"><h4>Hot Pack</h4>
+            <p>Pre‑heat peach slices in hot syrup a few minutes. Pack hot peaches into hot jars, ladle syrup to 1/2" headspace. Remove bubbles and wipe rims.</p>
+          </li>
+          <li class="step"><h4>Process</h4>
+            <p>Apply lids/bands fingertip‑tight. Process at a full rolling boil: pints ~20 minutes, quarts ~25 minutes (adjust for altitude).</p>
+          </li>
+          <li class="step"><h4>Cool &amp; Store</h4>
+            <p>Cool 12–24 hours. Check seals, label, and store in a cool, dark place. Enjoy within a year for best quality.</p>
+          </li>
+        </ol>
+      </article>
+
+      <!-- FERMENTATION 101 (HOW-TO) -->
+      <article id="fermentation" class="guide">
+        <h3>Fermentation 101: Simple Sauerkraut</h3>
+        <div class="columns">
+          <div>
+            <h4>Tools</h4>
+            <ul>
+              <li>1 wide‑mouth quart jar</li>
+              <li>Fermentation weight (or small jar) &amp; lid/airlock</li>
+              <li>Cutting board &amp; knife</li>
+            </ul>
+            <h4>Ingredients</h4>
+            <ul>
+              <li>1 medium cabbage (~2 lb)</li>
+              <li>~1.5 Tbsp non‑iodized salt (≈2% by weight)</li>
+              <li>Optional: caraway seeds</li>
+            </ul>
+          </div>
+          <div>
+            <img class="header-img" src="assets/guides/fermentation-101.jpg" alt="Shredded cabbage packed into a jar under brine" />
+            <p class="small">Cleanliness matters. Keep everything rinsed and free of soap residue.</p>
+          </div>
+        </div>
+        <ol class="steps">
+          <li class="step"><h4>Shred &amp; Salt</h4>
+            <p>Thinly slice cabbage; sprinkle salt and massage until it releases brine (5–10 minutes).</p>
+          </li>
+          <li class="step"><h4>Pack &amp; Submerge</h4>
+            <p>Pack tightly into the jar so brine rises to cover. Add weight to keep cabbage submerged.</p>
+          </li>
+          <li class="step"><h4>Ferment</h4>
+            <p>Cover loosely or use an airlock. Ferment at cool room temperature 1–3 weeks until tangy. Refrigerate to slow fermentation.</p>
+          </li>
+        </ol>
+      </article>
+
+      <!-- FREEZING GREENS (HOW-TO) -->
+      <article id="freezing" class="guide">
+        <h3>Freezing Greens: Spinach, Collards, Kale</h3>
+        <div class="columns">
+          <div>
+            <h4>Tools</h4>
+            <ul>
+              <li>Large pot, ice bath, tongs, baking sheet</li>
+              <li>Freezer bags or containers</li>
+            </ul>
+            <h4>Prep</h4>
+            <ul>
+              <li>Wash thoroughly and destem tough ribs.</li>
+              <li>Bring a large pot of water to a boil; prepare an ice bath.</li>
+            </ul>
+          </div>
+          <div>
+            <img class="header-img" src="assets/guides/freezing-greens.jpg" alt="Blanched greens cooling in an ice bath" />
+            <p class="small">Blanching locks in color and nutrition and prevents bitterness.</p>
+          </div>
+        </div>
+        <ol class="steps">
+          <li class="step"><h4>Blanch</h4>
+            <p>Boil 1–2 minutes (collards 3). Transfer immediately to the ice bath.</p>
+          </li>
+          <li class="step"><h4>Cool &amp; Dry</h4>
+            <p>Drain well; squeeze out excess water. Chop if desired.</p>
+          </li>
+          <li class="step"><h4>Portion &amp; Freeze</h4>
+            <p>Pre‑freeze portions on a sheet pan, then store in freezer bags. Label and date.</p>
+          </li>
+        </ol>
+      </article>
+          <!-- ROASTED GARDEN SALSA -->
+      <article class="guide recipe" id="garden-salsa">
+        <h3>Roasted Garden Salsa</h3>
+        <div class="columns">
+          <div>
+            <p class="meta"><span><strong>Yield:</strong> ~4 cups</span><span><strong>Active:</strong> 25 min</span><span><strong>Ready:</strong> 40 min</span></p>
+            <h4>Ingredients</h4>
+            <ul>
+              <li>2 lb ripe tomatoes, halved</li>
+              <li>1 jalapeño (2 for hot), whole</li>
+              <li>1/2 onion, quartered</li>
+              <li>3 cloves garlic, unpeeled</li>
+              <li>1/2 cup cilantro, chopped</li>
+              <li>Juice of 1 lime, salt to taste</li>
+            </ul>
+          </div>
+        </div>
+        <ol class="steps">
+          <li class="step"><h4>Roast</h4>
+            <p>Broil tomatoes, jalapeño, onion, and garlic on a sheet pan until blistered (8–12 min), turning once.</p>
+          </li>
+          <li class="step"><h4>Blend</h4>
+            <p>Peel garlic. Pulse everything with cilantro and lime. Season with salt; blend smooth or leave chunky.</p>
+          </li>
+          <li class="step"><h4>Chill</h4>
+            <p>Chill 30 minutes to let flavors meld. Serve with chips, tacos, or eggs.</p>
+          </li>
+        </ol>
+      </article>
+
+      <!-- SUMMER SUCCOTASH -->
+      <article class="guide recipe" id="summer-succotash">
+        <h3>Summer Succotash with Okra &amp; Corn</h3>
+        <div class="columns">
+          <div>
+            <p class="meta"><span><strong>Yield:</strong> 4 servings</span><span><strong>Active:</strong> 20 min</span><span><strong>Ready:</strong> 25 min</span></p>
+            <h4>Ingredients</h4>
+            <ul>
+              <li>2 cups fresh corn kernels</li>
+              <li>2 cups sliced okra</li>
+              <li>1 cup halved cherry tomatoes</li>
+              <li>1/2 onion, diced</li>
+              <li>2 Tbsp butter or olive oil</li>
+              <li>1 clove garlic, minced; 1 tsp fresh thyme</li>
+              <li>Salt &amp; black pepper; splash of apple cider vinegar</li>
+            </ul>
+          </div>
+        </div>
+        <ol class="steps">
+          <li class="step"><h4>Prep</h4>
+            <p>Cut corn off cobs; slice okra; halve tomatoes; dice onion.</p>
+          </li>
+          <li class="step"><h4>Sauté</h4>
+            <p>Heat fat; cook onion 2–3 min. Add okra and corn; cook 5–7 min until tender‑crisp. Stir in garlic and thyme 1 min.</p>
+          </li>
+          <li class="step"><h4>Finish</h4>
+            <p>Fold in tomatoes; season with salt, pepper, and a splash of vinegar. Serve warm.</p>
+          </li>
+        </ol>
+      </article>
+    </section>
+
+    <section class="section" aria-labelledby="seasonal">
+      <h2 id="seasonal">Seasonal Produce</h2>
+      <div class="grid grid-3 header-media" style="margin-top:.75rem">
+        <img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=1200&q=80" alt="Farmers market display of seasonal vegetables">
+        <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=1200&q=80" alt="Basket of fresh peaches and summer fruit">
+        <img src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=1200&q=80" alt="Assorted root vegetables harvested in fall">
+      </div>
+
+      <!-- SUMMER -->
+      <div class="season-bar" style="background-image:url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80')">
+        <span class="label">Summer</span>
+      </div>
+      <ul class="produce-grid">
+        <li class="produce-item"><h5>Tomatoes</h5><div class="meta">Plant: after last frost (Mar–Apr) • Replant: late Jul for fall</div><div class="spice">Spices: basil, oregano, garlic</div></li>
+        <li class="produce-item"><h5>Peppers (bell, jalapeño)</h5><div class="meta">Transplant into warm soil (May)</div><div class="spice">Spices: cumin, paprika, coriander</div></li>
+        <li class="produce-item"><h5>Cucumbers</h5><div class="meta">Direct sow after frost (Apr–May) • Succession every 2–3 wks</div><div class="spice">Spices: dill, mustard seed, garlic</div></li>
+        <li class="produce-item"><h5>Zucchini/Summer squash</h5><div class="meta">Direct sow after frost • Succession every 3–4 wks</div><div class="spice">Spices: thyme, chili flake, lemon zest</div></li>
+        <li class="produce-item"><h5>Okra</h5><div class="meta">Sow when soil &gt; 70°F (May–Jun)</div><div class="spice">Spices: cayenne, garlic, smoked paprika</div></li>
+        <li class="produce-item"><h5>Eggplant</h5><div class="meta">Transplant when nights &gt; 60°F (May)</div><div class="spice">Spices: oregano, sumac, pepper</div></li>
+        <li class="produce-item"><h5>Basil</h5><div class="meta">Sow/transplant after frost; pinch to bush</div><div class="spice">Pairs with tomatoes, garlic, lemon</div></li>
+        <li class="produce-item"><h5>Dill</h5><div class="meta">Succession sow spring to midsummer</div><div class="spice">For pickles; pairs with cucumber, fish</div></li>
+      </ul>
+
+      <!-- FALL -->
+      <div class="season-bar" style="background-image:url('https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=1600&q=80')">
+        <span class="label">Fall</span>
+      </div>
+      <ul class="produce-grid">
+        <li class="produce-item"><h5>Broccoli</h5><div class="meta">Transplant late Aug–Sep</div><div class="spice">Spices: garlic, lemon, red pepper flake</div></li>
+        <li class="produce-item"><h5>Cauliflower</h5><div class="meta">Transplant Sep</div><div class="spice">Spices: turmeric, cumin, curry powder</div></li>
+        <li class="produce-item"><h5>Cabbage</h5><div class="meta">Transplant Aug–Sep</div><div class="spice">Spices: caraway, mustard seed</div></li>
+        <li class="produce-item"><h5>Kale</h5><div class="meta">Sow/transplant Aug–Sep</div><div class="spice">Spices: garlic, chili, nutmeg</div></li>
+        <li class="produce-item"><h5>Carrots</h5><div class="meta">Direct sow Aug–Sep</div><div class="spice">Spices: cumin, coriander</div></li>
+        <li class="produce-item"><h5>Beets</h5><div class="meta">Direct sow Sep–Oct</div><div class="spice">Spices: dill, orange zest</div></li>
+        <li class="produce-item"><h5>Radishes</h5><div class="meta">Direct sow Sep–Nov</div><div class="spice">Spices: sesame, soy (for quick pickles)</div></li>
+        <li class="produce-item"><h5>Pecans</h5><div class="meta">Long‑term tree • Plant dormant stock in winter • Harvest fall</div><div class="spice">Spices: cinnamon, clove (baking)</div></li>
+      </ul>
+
+      <!-- WINTER -->
+      <div class="season-bar" style="background-image:url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80')">
+        <span class="label">Winter</span>
+      </div>
+      <ul class="produce-grid">
+        <li class="produce-item"><h5>Onions</h5><div class="meta">Sets/transplants Jan–Feb</div><div class="spice">Spices: thyme, bay leaf</div></li>
+        <li class="produce-item"><h5>Spinach</h5><div class="meta">Sow late fall or late winter for spring harvest</div><div class="spice">Spices: nutmeg, garlic</div></li>
+        <li class="produce-item"><h5>Collards</h5><div class="meta">Transplant late winter</div><div class="spice">Spices: smoked paprika, chili flake</div></li>
+        <li class="produce-item"><h5>Swiss Chard</h5><div class="meta">Transplant late winter</div><div class="spice">Spices: lemon, garlic</div></li>
+        <li class="produce-item"><h5>English Peas</h5><div class="meta">Direct sow late winter (Feb)</div><div class="spice">Spices: mint, black pepper</div></li>
+        <li class="produce-item"><h5>Lemons</h5><div class="meta">Long‑term tree • Plant spring; protect from frost</div><div class="spice">Spices: rosemary, vanilla (desserts)</div></li>
+      </ul>
+
+      <!-- SPRING -->
+      <div class="season-bar" style="background-image:url('https://images.unsplash.com/photo-1492496913980-501348b61469?auto=format&fit=crop&w=1600&q=80')">
+        <span class="label">Spring</span>
+      </div>
+      <ul class="produce-grid">
+        <li class="produce-item"><h5>Strawberries</h5><div class="meta">Plant bare‑root late winter/early spring</div><div class="spice">Spices: mint, balsamic (finishes)</div></li>
+        <li class="produce-item"><h5>Lettuce</h5><div class="meta">Sow Feb–Apr; repeat Sep–Nov</div><div class="spice">Spices: chives, dill</div></li>
+        <li class="produce-item"><h5>Potatoes</h5><div class="meta">Plant seed potatoes Feb–Mar</div><div class="spice">Spices: rosemary, garlic</div></li>
+        <li class="produce-item"><h5>Green Beans</h5><div class="meta">Direct sow after frost (Apr–May)</div><div class="spice">Spices: oregano, black pepper</div></li>
+        <li class="produce-item"><h5>Cilantro</h5><div class="meta">Cool‑season herb; sow early spring &amp; fall</div><div class="spice">Pairs with salsa, tacos</div></li>
+        <li class="produce-item"><h5>Parsley</h5><div class="meta">Sow early spring; slow to germinate</div><div class="spice">Spices: lemon, garlic</div></li>
+        <li class="produce-item"><h5>Thyme</h5><div class="meta">Perennial herb; plant spring</div><div class="spice">Spices: bay, rosemary</div></li>
+        <li class="produce-item"><h5>Peaches</h5><div class="meta">Long‑term tree • Plant late winter; prune in summer</div><div class="spice">Spices: cinnamon, ginger (desserts)</div></li>
+      </ul>
+    </section>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="brandline">
+        <span class="logo" aria-hidden="true" style="background:#fff;width:28px;height:28px"></span>
+        <div>
+          <strong>Herndon Homestead</strong>
+          <small class="verse">“Commit your work to the Lord, and your plans will be established.” — Proverbs 16:3</small>
+          <small>Natural food, simple living, shared at the table.</small>
+        </div>
+      </div>
+      <div class="legal">
+        <span>© <span id="year"></span> Herndon Homestead. All rights reserved.</span>
+        <span> · </span>
+        <a href="privacy.html">Privacy</a>
+        <span> · </span>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Highlight current season cards (optional)
+    (function(){
+      const m = new Date().getMonth() + 1; // 1-12
+      document.querySelectorAll('.month').forEach(el => {
+        const months = (el.getAttribute('data-months')||'').split(',').map(Number);
+        if(months.includes(m)){
+          el.classList.add('current');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

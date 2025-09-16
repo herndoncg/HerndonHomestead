@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Support Herndon Homestead</title>
+  <meta name="description" content="Support Herndon Homestead — Your generosity helps us grow, teach, and serve. Donations, future merch, and volunteer opportunities." />
+  <meta property="og:title" content="Support Herndon Homestead" />
+  <meta property="og:description" content="Your support helps us grow, teach, and serve. Every bit helps keep the homestead alive and thriving." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/og-support.jpg" />
+  <link rel="icon" href="assets/favicon.png" />
+  <style>
+    /* =====================
+      Global Design Tokens
+    ====================== */
+    :root{
+      --ocean:#005F86;       /* Ocean Blue */
+      --tan:#d2b48c;         /* Tan */
+      --charcoal:#333333;    /* Light Charcoal */
+      --black:#000000;
+      --white:#ffffff;
+      --gold:#ffd28f;        /* Accent Gold */
+      --radius:14px;         /* rounded buttons/cards */
+      --shadow: 0 10px 24px rgba(0,0,0,.12), 0 2px 6px rgba(0,0,0,.08);
+      --shadow-soft: 0 6px 16px rgba(0,0,0,.10), 0 1px 4px rgba(0,0,0,.06);
+      --maxw: 1200px;
+    }
+
+    /* Fonts */
+    :root{ --font-heading: "Sitka", Georgia, serif; --font-body: "Inter", Arial, Helvetica, sans-serif; }
+
+    /* Reset & Base */
+    *,*::before,*::after{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
+    body{
+      font-family: var(--font-body);
+      color: var(--charcoal);
+      background: #f7f7f5;
+      line-height:1.6;
+    }
+    a{ color: var(--ocean); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+    img{ max-width:100%; display:block; }
+    .container{ width:min(100%, var(--maxw)); margin-inline:auto; padding-inline: 1rem; }
+
+    /* Accessibility */
+    .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus{ position:static; width:auto; height:auto; padding:.5rem .75rem; background:var(--gold); color:var(--black); border-radius:8px; }
+
+    /* =====================
+       Header / Nav (Sticky)
+    ====================== */
+    header{
+      position: sticky; top:0; z-index:50;
+      background: linear-gradient(0deg, rgba(255,255,255,.92), rgba(255,255,255,.92));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(0,0,0,.06);
+    }
+    .nav-wrap{ display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.6rem 0; }
+
+    .brand{
+      display:grid; grid-template-columns:auto 1fr; align-items:center; gap:.75rem;
+    }
+    .brand .favicon{
+      width:42px; height:42px; border-radius:10px; background:#eee url('assets/favicon.png') center/cover no-repeat; box-shadow: var(--shadow-soft);
+    }
+    .brand-title{ line-height:1.1; }
+    .brand-title h1{
+      font-family: var(--font-heading);
+      font-size: clamp(1.15rem, 1.2rem + .3vw, 1.6rem);
+      margin:0; color:var(--ocean);
+    }
+    .brand-title .tagline{
+      font-size:.9rem; color:#444; margin-top:.15rem; font-style: italic;
+    }
+
+    nav ul{ list-style:none; display:flex; gap:.5rem; align-items:center; margin:0; padding:0; }
+    nav a{
+      display:inline-block; padding:.55rem .8rem; border-radius:999px; font-weight:600; color:#223; text-decoration:none;
+    }
+    nav a:hover{ background: rgba(0,95,134,.08); box-shadow: var(--shadow-soft); transform: translateY(-1px); }
+    nav a[aria-current="page"]{
+      background: var(--ocean); color:var(--white); box-shadow: var(--shadow);
+    }
+
+    /* Mobile nav */
+    .nav-toggle{ display:none; }
+    .hamburger{ display:none; background:none; border:0; padding:.5rem; border-radius:10px; }
+    .hamburger:focus{ outline:2px solid var(--gold); }
+    .hamburger svg{ width:28px; height:28px; }
+
+    @media (max-width: 920px){
+      nav ul{ display:none; position:absolute; right:1rem; top:64px; flex-direction:column; background:#fff; padding:.5rem; border-radius:16px; box-shadow: var(--shadow); width:min(92vw, 420px); }
+      nav ul.show{ display:flex; }
+      .hamburger{ display:inline-grid; place-items:center; }
+    }
+
+    /* =====================
+       Hero
+    ====================== */
+    .hero{
+      position:relative;
+      background: linear-gradient(180deg, rgba(0,95,134,.72), rgba(0,95,134,.38)), url('assets/hero-homestead.jpg') center/cover no-repeat, var(--ocean);
+      color:var(--white);
+      padding: clamp(3rem, 6vw, 6rem) 0;
+    }
+    .hero h2{ font-family:var(--font-heading); font-size: clamp(2rem, 2.4rem + 1vw, 3.2rem); margin:0 0 .6rem; }
+    .hero p{ max-width: 60ch; font-size:1.05rem; margin:0; }
+    .hero .verse{ margin-top:.9rem; font-style:italic; font-family: var(--font-heading); font-size:1rem; color: var(--white); text-shadow: 0 1px 2px rgba(0,0,0,.35); }
+
+    /* =====================
+       Options Grid
+    ====================== */
+    .section{ padding: clamp(2rem, 4vw, 3.5rem) 0; }
+    .section h3{ font-family: var(--font-heading); font-size: clamp(1.4rem, 1.2rem + .8vw, 2rem); margin:0 0 1rem; color:#1f2a2e; }
+    .section p.lead{ font-size:1.05rem; color:#4a4a4a; max-width:70ch; }
+
+    .grid{
+      display:grid; gap:1.25rem;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .col-4{ grid-column: span 4; }
+    .col-6{ grid-column: span 6; }
+    .col-12{ grid-column: span 12; }
+    @media (max-width: 900px){ .col-4,.col-6{ grid-column: span 12; } }
+
+    .card{
+      background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-soft);
+      padding: 1.1rem; transition:.25s ease; border:1px solid rgba(0,0,0,.05);
+    }
+    .card:hover{ transform: translateY(-3px); box-shadow: var(--shadow); }
+    .card h4{ font-family:var(--font-heading); font-size:1.25rem; margin:.25rem 0 .5rem; color:#1c1c1c; }
+    .card p{ color:#4a4a4a; }
+
+    .btn{
+      display:inline-block; padding:.7rem 1rem; border-radius: 999px; border:0; cursor:pointer; font-weight:700; text-decoration:none;
+      background: var(--ocean); color:var(--white); box-shadow: var(--shadow-soft);
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow); background: #06719f; }
+    .btn.tan{ background: var(--tan); color:#1a1a1a; }
+    .btn.ghost{ background: transparent; border:2px solid var(--ocean); color:var(--ocean); }
+    .btn[disabled]{ opacity:.6; cursor:not-allowed; }
+
+    .muted{ color:#666; font-size:.95rem; }
+    .pill{ display:inline-block; padding:.25rem .55rem; border-radius:999px; background:#f1f5f9; font-size:.85rem; color:#374151; }
+
+    /* Donations module */
+    .donate-tiers{ display:flex; flex-wrap:wrap; gap:.5rem; margin:.75rem 0 1rem; }
+    .tier{
+      background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px; padding:.55rem .7rem; cursor:pointer; user-select:none;
+    }
+    .tier[aria-pressed="true"]{ background: var(--gold); border-color:#e5aa49; }
+    .donate-form input[type="number"], .donate-form input[type="text"], .donate-form input[type="email"], .donate-form select, .donate-form textarea{
+      width:100%; padding:.7rem .8rem; border-radius:10px; border:1px solid #dadada; outline:none;
+    }
+    .donate-form input:focus, .donate-form textarea:focus{ border-color: var(--ocean); box-shadow: 0 0 0 3px rgba(0,95,134,.15); }
+    .row{ display:grid; gap:.75rem; grid-template-columns: 1fr 1fr; }
+    @media (max-width:720px){ .row{ grid-template-columns:1fr; } }
+
+    /* Volunteer form */
+    .checklist{ display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:.35rem .75rem; margin:.5rem 0 1rem; }
+    .checklist label{ display:flex; align-items:center; gap:.5rem; }
+
+    /* =====================
+       Footer
+    ====================== */
+    footer{
+      background:#0d2b3a; color: #e9f3f8; margin-top:2rem; border-top: 4px solid var(--tan);
+    }
+    .footer-wrap{ padding: 1.5rem 0; display:grid; gap:1rem; grid-template-columns: 1fr auto; align-items:center; }
+    .footer-left small{ display:block; }
+    .footer-nav a{ color:#e9f3f8; padding:.25rem .5rem; border-radius:8px; }
+    .footer-nav a:hover{ background: rgba(255,255,255,.08); text-decoration:none; }
+
+    /* Utility */
+    .spacer-xs{ height:.5rem; }
+    .spacer{ height:1rem; }
+    .spacer-lg{ height:2rem; }
+    .hr{ height:1px; background: #e5e7eb; border:0; margin:1rem 0; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <div class="container nav-wrap">
+      <div class="brand">
+        <div class="favicon" aria-hidden="true"></div>
+        <div class="brand-title">
+          <h1>Herndon Homestead</h1>
+          <div class="tagline">“Natural food, simple living, shared at the table.”</div>
+        </div>
+      </div>
+
+      <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+
+      <nav aria-label="Global">
+        <ul id="site-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="subbrands.html">Sub-Brands</a></li>
+          <li><a href="recipes.html">Recipes</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="support.html" aria-current="page">Support</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h2>Support Herndon Homestead.</h2>
+        <p>Your support helps us grow, teach, and serve. Every bit helps keep the homestead alive and thriving.</p>
+        <div class="verse"><strong>Proverbs 16:3</strong> — “Commit thy works unto the LORD, and thy thoughts shall be established.”</div>
+      </div>
+    </section>
+
+    <!-- Support Options -->
+    <section class="section">
+      <div class="container">
+        <h3>Ways You Can Help</h3>
+        <p class="lead">Pick what fits you best — a one-time gift, sharing our future merch, or lending a hand. However you join in, you’re pulling up a chair at our table.</p>
+        <div class="spacer"></div>
+
+        <div class="grid">
+          <!-- Donations Card -->
+          <article class="card col-6" aria-labelledby="donations-title">
+            <div class="pill">Donations</div>
+            <h4 id="donations-title">Fuel the Work</h4>
+            <p>Give once or pledge monthly. Your generosity covers seeds and soil, classes, community meals, and practical needs around the homestead.</p>
+            <div class="donate-form">
+              <form id="donationForm" action="#" method="post" onsubmit="event.preventDefault(); handlePledge();">
+                <label for="donation-amount" class="muted">Choose an amount</label>
+                <div class="donate-tiers" role="group" aria-label="Suggested donation tiers">
+                  <button type="button" class="tier" data-amt="10" aria-pressed="false">$10 • Seed</button>
+                  <button type="button" class="tier" data-amt="25" aria-pressed="false">$25 • Seedlings</button>
+                  <button type="button" class="tier" data-amt="50" aria-pressed="false">$50 • Garden Row</button>
+                  <button type="button" class="tier" data-amt="100" aria-pressed="false">$100 • Harvest Basket</button>
+                  <button type="button" class="tier" data-amt="250" aria-pressed="false">$250 • Community Table</button>
+                </div>
+                <div class="row">
+                  <div>
+                    <label class="muted" for="donation-amount">Custom amount (USD)</label>
+                    <input id="donation-amount" name="amount" type="number" min="1" step="1" placeholder="e.g., 40" required />
+                  </div>
+                  <div>
+                    <label class="muted" for="donation-frequency">Frequency</label>
+                    <select id="donation-frequency" name="frequency">
+                      <option value="one-time">One-time</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="quarterly">Quarterly</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div>
+                    <label class="muted" for="donor-name">Full name</label>
+                    <input id="donor-name" name="name" type="text" placeholder="First & Last" />
+                  </div>
+                  <div>
+                    <label class="muted" for="donor-email">Email for receipt</label>
+                    <input id="donor-email" name="email" type="email" placeholder="you@example.com" />
+                  </div>
+                </div>
+                <div class="spacer-xs"></div>
+                <button class="btn" type="submit">Pledge Support</button>
+                <span id="pledge-msg" class="muted" aria-live="polite" style="margin-left:.5rem"></span>
+                <div class="spacer-xs"></div>
+                <p class="muted">Note: Payment processing (Stripe/PayPal) coming soon. This pledge lets us follow up with details.</p>
+              </form>
+            </div>
+          </article>
+
+          <!-- Merch Card -->
+          <article class="card col-6" aria-labelledby="merch-title">
+            <div class="pill">Merch (future)</div>
+            <h4 id="merch-title">Wear the Story</h4>
+            <p>We’re designing simple, durable goods that reflect the homestead — from kitchen towels to tees. Join the list to be first in line when the shop opens.</p>
+            <form class="row" onsubmit="event.preventDefault(); merchSignup();">
+              <div>
+                <label class="muted" for="merch-email">Email</label>
+                <input id="merch-email" type="email" placeholder="you@example.com" required />
+              </div>
+              <div style="align-self:end;">
+                <button class="btn tan" type="submit">Notify Me</button>
+              </div>
+            </form>
+            <div class="spacer-xs"></div>
+            <p id="merch-msg" class="muted" aria-live="polite"></p>
+            <div class="hr"></div>
+            <p class="muted">Target launch: when it serves the community well. Quality over speed. <em>Thank you for the patience!</em></p>
+          </article>
+
+          <!-- Volunteer Card -->
+          <article class="card col-12" aria-labelledby="vol-title">
+            <div class="pill">Volunteer / Community Involvement</div>
+            <h4 id="vol-title">Lend a Hand</h4>
+            <p>We love putting people to work in ways that fit their season and gifts — garden days, kitchen prep, class days, events, deliveries, and more. Tell us how you’d like to serve.</p>
+
+            <form class="donate-form" id="volForm" onsubmit="event.preventDefault(); volunteerSubmit();">
+              <div class="row">
+                <div>
+                  <label class="muted" for="v-name">Full name</label>
+                  <input id="v-name" type="text" placeholder="First & Last" required />
+                </div>
+                <div>
+                  <label class="muted" for="v-email">Email</label>
+                  <input id="v-email" type="email" placeholder="you@example.com" required />
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <label class="muted" for="v-phone">Phone (optional)</label>
+                  <input id="v-phone" type="text" placeholder="(xxx) xxx-xxxx" />
+                </div>
+                <div>
+                  <label class="muted" for="v-availability">Availability</label>
+                  <select id="v-availability">
+                    <option>Weekdays</option>
+                    <option>Weeknights</option>
+                    <option>Weekends</option>
+                    <option>Flexible</option>
+                  </select>
+                </div>
+              </div>
+              <fieldset style="border:0; padding:0; margin:0;">
+                <legend class="muted">Areas you’re interested in</legend>
+                <div class="checklist">
+                  <label><input type="checkbox" value="Gardening"> Gardening</label>
+                  <label><input type="checkbox" value="Canning/Preserving"> Canning & Preserving</label>
+                  <label><input type="checkbox" value="Classes/Workshops"> Classes & Workshops</label>
+                  <label><input type="checkbox" value="Meals/Hospitality"> Meals & Hospitality</label>
+                  <label><input type="checkbox" value="Events/Setup"> Events & Setup</label>
+                  <label><input type="checkbox" value="Deliveries"> Deliveries</label>
+                  <label><input type="checkbox" value="Prayer Team"> Prayer Team</label>
+                </div>
+              </fieldset>
+              <label class="muted" for="v-notes">Tell us more (skills, ideas, questions)</label>
+              <textarea id="v-notes" rows="4" placeholder="I can help with…"></textarea>
+              <div class="spacer-xs"></div>
+              <button type="submit" class="btn">Submit Interest</button>
+              <span id="vol-msg" class="muted" aria-live="polite" style="margin-left:.5rem"></span>
+            </form>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-wrap">
+      <div class="footer-left">
+        <strong>Herndon Homestead</strong>
+        <small>“Natural food, simple living, shared at the table.”</small>
+        <small>Proverbs 16:3</small>
+        <small>&copy; <span id="year"></span> Herndon Homestead. All rights reserved.</small>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navList = document.getElementById('site-nav');
+    hamburger?.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', String(!expanded));
+      navList.classList.toggle('show');
+    });
+
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Donation tier selection
+    const tiers = Array.from(document.querySelectorAll('.tier'));
+    const amountInput = document.getElementById('donation-amount');
+    tiers.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tiers.forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        const amt = btn.getAttribute('data-amt');
+        amountInput.value = amt;
+        amountInput.focus();
+      });
+    });
+
+    function handlePledge(){
+      const msg = document.getElementById('pledge-msg');
+      const amt = amountInput.value || '0';
+      const freq = document.getElementById('donation-frequency').value;
+      msg.textContent = `Thank you! We recorded a ${freq} pledge of $${amt}. We'll email you payment details soon.`;
+    }
+    function merchSignup(){
+      const email = document.getElementById('merch-email').value.trim();
+      const msg = document.getElementById('merch-msg');
+      if(!email){ msg.textContent = ''; return; }
+      msg.textContent = `Got it! We'll let you know when merch is ready.`;
+    }
+    function volunteerSubmit(){
+      const name = document.getElementById('v-name').value.trim();
+      const msg = document.getElementById('vol-msg');
+      msg.textContent = `Thanks, ${name || 'friend'}! We'll follow up with next steps soon.`;
+    }
+  </script>
+
+  <!--
+    Implementation Notes:
+    - Replace assets/hero-support.jpg with a warm homestead or garden image (green tones preferred).
+    - Hook up donation form to Stripe/PayPal when ready (IDs already in place for easy JS integration).
+    - To add more support options, duplicate a .card block in the grid.
+    - Header and footer match global brand (sticky header, shared navigation, verse, tagline).
+  -->
+</body>
+</html>

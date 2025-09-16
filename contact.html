@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact Us • Herndon Homestead</title>
+  <meta name="description" content="Get in touch with Herndon Homestead. Natural food, simple living, shared at the table." />
+  <link rel="icon" href="favicon.ico" />
+
+  <style>
+    :root{
+      --blue:#005F86;
+      --tan:#d2b48c;
+      --charcoal:#333333;
+      --gold:#ffd28f;
+      --offwhite:#faf8f5;
+      --shadow:0 8px 24px rgba(0,0,0,.08);
+      --radius:14px;
+      --radius-sm:10px;
+      --focus:0 0 0 3px rgba(0,95,134,.25);
+      --maxw:1200px;
+    }
+
+    /* Global reset & typography */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color:var(--charcoal);
+      background:var(--offwhite);
+      line-height:1.6;
+    }
+    h1,h2,h3,.brand-name{
+      font-family: "Sitka", Georgia, serif;
+      margin:0 0 .5rem 0;
+      color:var(--charcoal);
+    }
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 1rem}
+
+    /* Header / Nav */
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:#fff;
+      box-shadow:var(--shadow);
+    }
+    .nav-row{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:.75rem 0;
+      gap:1rem;
+    }
+
+    .brand{display:flex; align-items:center; gap:.75rem}
+    .favicon{
+      width:36px; height:36px; border-radius:8px; flex:0 0 36px;
+      background:#eee; box-shadow:var(--shadow);
+      object-fit:cover;
+    }
+    .brand-text{display:flex; flex-direction:column; line-height:1.25}
+    .brand-name{font-size:1.15rem; font-weight:800; letter-spacing:.2px}
+    .tagline{font-size:.85rem; color:#555; margin-top:.15rem}
+
+    nav ul{
+      display:flex; flex-wrap:wrap; list-style:none; gap:.5rem; margin:0; padding:0;
+    }
+    nav a{
+      display:inline-block; padding:.5rem .75rem; border-radius:999px;
+      color:#111; font-weight:600; letter-spacing:.2px;
+      transition:transform .15s ease, box-shadow .15s ease, background .2s ease;
+    }
+    nav a:hover{transform:translateY(-1px); box-shadow:var(--shadow); background:#fff}
+    nav a.active{
+      background:var(--blue); color:#fff;
+      box-shadow:var(--shadow);
+    }
+
+    /* Hero */
+    .hero{
+      position:relative;
+      background:
+        radial-gradient(1200px 400px at 10% -20%, rgba(0,95,134,.12), transparent 70%),
+        radial-gradient(900px 300px at 100% 10%, rgba(210,180,140,.18), transparent 70%),
+        linear-gradient(180deg,#ffffff 0%, #f6f2ec 100%);
+      border-bottom:1px solid #eae6e0;
+    }
+    .hero-inner{padding:2.5rem 0}
+    .hero-grid{
+      display:grid; gap:1.5rem; align-items:center;
+      grid-template-columns: 1.05fr .95fr;
+    }
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr}
+    }
+    .hero h1{
+      font-size:clamp(2rem, 3.3vw, 3rem);
+      color:var(--blue);
+      margin-bottom:.5rem;
+    }
+    .hero p{color:#555; margin:0; max-width:52ch}
+    .hero-img{
+      width:100%; aspect-ratio:16/10; object-fit:cover;
+      border-radius:var(--radius); box-shadow:var(--shadow);
+      border:1px solid #e8e2db;
+    }
+
+    /* Layout */
+    .grid{
+      display:grid; gap:1.25rem;
+      grid-template-columns: 1.2fr .8fr;
+      margin:2rem 0 3rem;
+    }
+    @media (max-width: 920px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    /* Cards */
+    .card{
+      background:#fff; border-radius:var(--radius); box-shadow:var(--shadow);
+      padding:1.25rem;
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover{transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,.10)}
+    .card h2{font-size:1.25rem; margin-bottom:.75rem; color:var(--charcoal)}
+
+    /* Form */
+    form .row{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+    @media (max-width:600px){form .row{grid-template-columns:1fr}}
+    label{display:block; font-weight:700; margin-bottom:.4rem}
+    .hint{font-size:.85rem; color:#666; margin-top:.35rem}
+    input, select, textarea{
+      width:100%; padding:.8rem .9rem; border-radius:var(--radius-sm);
+      border:1px solid #e1ddd7; background:#fff; font-size:1rem;
+      outline:none; transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    input:focus, select:focus, textarea:focus{border-color:var(--blue); box-shadow:var(--focus)}
+    textarea{min-height:160px; resize:vertical}
+    .btn{
+      display:inline-block; border:0; cursor:pointer; user-select:none;
+      font-weight:800; letter-spacing:.2px;
+      padding:.9rem 1.15rem; border-radius:999px;
+      background:var(--blue); color:#fff;
+      box-shadow:var(--shadow);
+      transition:transform .12s ease, box-shadow .12s ease, background .18s ease;
+    }
+    .btn:hover{transform:translateY(-2px); background:#004c6b}
+    .btn:focus{box-shadow:var(--focus)}
+    .btn.alt{background:var(--gold); color:#222}
+    .btn.alt:hover{background:#ffc874}
+
+    .status{
+      margin-top:.9rem; font-size:.95rem;
+      padding:.75rem .9rem; border-radius:var(--radius-sm);
+      background:#f4fbff; color:#0b3d56; border:1px solid #dbedf5;
+      display:none;
+    }
+    .status.show{display:block}
+
+    /* Info & Map */
+    .info-list{display:grid; gap:.65rem; margin:.5rem 0 0}
+    .info-item{
+      padding:.9rem 1rem; background:#fff; border:1px solid #eee9e2;
+      border-radius:var(--radius-sm); display:flex; align-items:flex-start; gap:.75rem;
+    }
+    .info-item b{font-family:"Sitka", Georgia, serif}
+    .map-wrap{
+      margin-top:1rem;
+      background:repeating-linear-gradient(135deg,#f9f6f2,#f9f6f2 12px,#f3efe9 12px,#f3efe9 24px);
+      border:1px dashed #d9d2c8; border-radius:var(--radius);
+      overflow:hidden;
+    }
+    .map-placeholder{
+      aspect-ratio:16/9; width:100%;
+      display:grid; place-items:center; text-align:center; padding:1rem;
+      color:#666;
+      background:
+        radial-gradient(200px 100px at 10% 20%, rgba(0,95,134,.09), transparent 70%),
+        radial-gradient(220px 120px at 80% 70%, rgba(210,180,140,.18), transparent 70%);
+    }
+
+    /* Footer */
+    footer{
+      background:#111; color:#eaeaea; padding:2rem 0 2.5rem; margin-top:2rem;
+      border-top:4px solid var(--tan);
+    }
+    .foot-grid{
+      display:grid; gap:1.2rem; grid-template-columns:2fr 1fr; align-items:center;
+    }
+    @media (max-width:800px){.foot-grid{grid-template-columns:1fr; text-align:center}}
+    .foot-tag{font-family:"Sitka", Georgia, serif; font-size:1.05rem; color:#fff}
+    .foot-mini{color:#cfcfcf; font-size:.95rem; margin:.35rem 0 0}
+    .foot-links{display:flex; gap:.75rem; justify-content:flex-end; flex-wrap:wrap}
+    .foot-links a{color:#fff; background:#222; padding:.5rem .8rem; border-radius:999px; box-shadow:var(--shadow)}
+    .foot-links a:hover{background:#2b2b2b}
+    .verse{margin-top:1rem; font-style:italic; color:#d9d9d9}
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-row">
+      <div class="brand">
+        <!-- Favicon placeholder (replace src with your favicon path) -->
+        <img class="favicon" src="favicon.png" alt="" />
+        <div class="brand-text">
+          <span class="brand-name">Herndon Homestead</span>
+          <span class="tagline">“Natural food, simple living, shared at the table.”</span>
+        </div>
+      </div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="subbrands.html">Sub-Brands</a></li>
+          <li><a href="recipes.html">Recipes</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a class="active" href="contact.html" aria-current="page">Contact</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero with side photo -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-grid">
+        <div>
+          <h1>Contact Us.</h1>
+          <p>Got a question about Herndough breads, classes, or homestead life? Send us a note—we’d love to hear from you.</p>
+        </div>
+        <div>
+          <img class="hero-img" src="https://images.unsplash.com/photo-1492496913980-501348b61469?q=80&w=1400&auto=format&fit=crop" alt="Homestead farmhouse and garden at golden hour" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <main class="container">
+    <div class="grid">
+      <!-- Contact Form -->
+      <section class="card" aria-labelledby="contactFormTitle">
+        <h2 id="contactFormTitle">Send a Message</h2>
+
+        <!-- Netlify-ready form (works on Netlify out of the box) -->
+        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contactForm" novalidate>
+          <input type="hidden" name="form-name" value="contact" />
+          <p hidden>
+            <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+          </p>
+
+          <div class="row">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Jane Doe" autocomplete="name" required />
+              <div class="hint">So we know who to reply to.</div>
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+              <div class="hint">We’ll reply here.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="category">Category</label>
+              <select id="category" name="category" required>
+                <option value="General" selected>General</option>
+                <option value="Wholesale">Wholesale</option>
+                <option value="Classes">Classes</option>
+              </select>
+            </div>
+            <div>
+              <label for="subject">Subject <span style="font-weight:400;color:#777">(optional)</span></label>
+              <input id="subject" name="subject" type="text" placeholder="How can we help?" />
+            </div>
+          </div>
+
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Share details so we can best assist you." required></textarea>
+          </div>
+
+          <div style="display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin-top:.5rem">
+            <button class="btn" type="submit">Send Message</button>
+            <button class="btn alt" type="reset">Clear</button>
+          </div>
+
+          <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <!-- Contact Info & Map -->
+      <aside class="card" aria-labelledby="contactInfoTitle">
+        <h2 id="contactInfoTitle">Contact Info</h2>
+        <div class="info-list">
+          <div class="info-item">
+            <div>
+              <b>Email</b><br/>
+              <a href="mailto:info@herndonhomestead.com">info@herndonhomestead.com</a>
+            </div>
+          </div>
+          <div class="info-item">
+            <div>
+              <b>Mailing Address</b><br/>
+              PO Box 000<br/>
+              Your Town, TX 00000
+            </div>
+          </div>
+        </div>
+
+        <div class="map-wrap" aria-labelledby="mapTitle" role="group">
+          <div class="map-placeholder" id="map" data-embed="google-map">
+            <div>
+              <h3 id="mapTitle" style="margin:.2rem 0 .4rem; font-size:1.05rem;">Map Placeholder</h3>
+              <p style="margin:0; max-width:42ch">
+                Drop in your Google Maps embed here.<br/>
+                Replace this block with an <code>&lt;iframe&gt;</code> once you’re ready.
+              </p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div>
+          <div class="foot-tag">Herndon Homestead — “Natural food, simple living, shared at the table.”</div>
+          <div class="foot-mini">© <span id="year"></span> Herndon Homestead. All rights reserved.</div>
+          <div class="verse">Proverbs 16:3 — “Commit to the Lord whatever you do, and he will establish your plans.”</div>
+        </div>
+        <div class="foot-links">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple client-side handling: no popups, just inline status.
+    const form = document.getElementById('contactForm');
+    const statusBox = document.getElementById('formStatus');
+
+    function showStatus(msg, ok=true){
+      statusBox.classList.add('show');
+      statusBox.style.background = ok ? '#f4fbff' : '#fff7f7';
+      statusBox.style.borderColor = ok ? '#dbedf5' : '#ffd8d8';
+      statusBox.style.color = ok ? '#0b3d56' : '#7a1e1e';
+      statusBox.textContent = msg;
+    }
+
+    form?.addEventListener('submit', function(e){
+      const name = form.querySelector('#name');
+      const email = form.querySelector('#email');
+      const message = form.querySelector('#message');
+
+      if(!name.value.trim() || !email.value.trim() || !message.value.trim()){
+        e.preventDefault();
+        showStatus('Please fill out Name, Email, and Message.', false);
+        return;
+      }
+      showStatus('Sending…');
+    });
+
+    form?.addEventListener('reset', function(){
+      statusBox.classList.remove('show');
+      statusBox.textContent = '';
+    });
+  </script>
+</body>
+</html>
